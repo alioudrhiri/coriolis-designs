@@ -31,7 +31,14 @@
    shift
  done
 
- 
+ crlenv="`pwd`/bin/crlenv.py"
+ if [ ! -x "${crlenv}" ]; then
+   echo "[ERROR] regression.sh: Unable to find crlenv.py script."
+   echo "        (${crlenv})"
+   exit 1
+ fi
+ sitePackagesDir=`${crlenv} -P` 
+
 
  declare -A benchRules
  benchRules["picorv32/nsx2"]="gds"
@@ -56,37 +63,30 @@
  benchsSet4=""
  benchsSet5=""
 
- if [ -e "../coriolis-pdk-sky130-c4m" ]; then
+ if [ -e "${sitePackagesDir}/pdks/sky130_c4m" ]; then
    benchsSet1="${benchsSet1} arlet6502/original/sky130_c4m"
    benchsSet1="${benchsSet1} arlet6502/fixed/sky130_c4m"
    benchsSet1="${benchsSet1} picorv32/sky130_c4m"
  fi
- if [ -e "../coriolis-pdk-gf180mcu" ]; then
+ if [ -e "${sitePackagesDir}/pdks/gf180mcu" ]; then
    benchsSet2="${benchsSet2} arlet6502/original/gf180mcu_gf"
    benchsSet2="${benchsSet2} arlet6502/fixed/gf180mcu_gf"
    benchsSet2="${benchsSet2} picorv32/gf180mcu_gf"
  fi
- if [ -e "../coriolis-pdk-gf180mcu-c4m" ]; then
+ if [ -e "${sitePackagesDir}/pdks/gf180mcu_c4m" ]; then
    benchsSet3="${benchsSet3} arlet6502/original/gf180mcu_c4m"
    benchsSet3="${benchsSet3} arlet6502/fixed/gf180mcu_c4m"
    benchsSet3="${benchsSet3} picorv32/gf180mcu_c4m"
  fi
- if [ -e "../coriolis-pdk-ihpsg13g2-c4m" ]; then
+ if [ -e "${sitePackagesDir}/pdks/ihpsg13g2_c4m" ]; then
    benchsSet4="${benchsSet4} arlet6502/original/ihpsg13g2_c4m"
    benchsSet4="${benchsSet4} arlet6502/fixed/ihpsg13g2_c4m"
    benchsSet4="${benchsSet4} picorv32/ihpsg13g2_c4m"
  fi
- if [ -e "../coriolis-pdk-nsx2" ]; then
+ if [ -e "${sitePackagesDir}/pdks/nsx2" ]; then
    benchsSet5="${benchsSet5} arlet6502/original/nsx2"
    benchsSet5="${benchsSet5} arlet6502/fixed/nsx2"
    benchsSet5="${benchsSet5} picorv32/nsx2"
- fi
-
- crlenv="`pwd`/bin/crlenv.py"
- if [ ! -x "${crlenv}" ]; then
-   echo "[ERROR] regression.sh: Unable to find crlenv.py script."
-   echo "        (${crlenv})"
-   exit 1
  fi
  if [ "${runSetId}" = "not_set" ]; then
    if [ "${gf180rule}" = "drc" ]; then
