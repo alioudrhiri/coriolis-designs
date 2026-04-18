@@ -84,7 +84,7 @@ def scriptMain ( **kw ):
         conf.bColumns            = 2
         conf.bRows               = 2
         conf.chipName            = 'chip'
-        conf.coreSize            = conf.computeCoreSize( 43*conf.sliceHeight, 1.0 )
+        conf.coreSize            = conf.computeCoreSize( 44*conf.sliceHeight, 1.0 )
         conf.chipSize            = ( 350*conf.sliceHeight, 350*conf.sliceHeight )
         if buildChip:
             conf.useHTree( 'clk_from_pad', Spares.HEAVY_LEAF_LOAD )
